@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace Infomation
 {
@@ -22,6 +25,8 @@ namespace Infomation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            //注入模板引擎
+            services.Configure<>
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
