@@ -25,8 +25,15 @@ namespace Infomation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //注入模板引擎
-            services.Configure<>
+            //注入视图模板引擎
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.AreaViewLocationFormats.Clear();   //清空视图模板引擎
+                options.AreaViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Views/{2}/{0}.cshtml");
+                options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +53,11 @@ namespace Infomation
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name:"areaRoute",
+                    template:"{area:exists}/{controller}/{action}/{id?}"
+                    );
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
