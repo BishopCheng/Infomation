@@ -52,7 +52,7 @@
                 </div>
                 <div class="row clearfix">
                     <div class="form-controls col-xs-8 col-xs-offset-3">
-                        <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+                        <input id="validateCode" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
                         <img src="images/VerifyCode.aspx.png">
                         <a id="kanbuq" href="javascript:;">看不清，换一张</a>
                     </div>
@@ -88,6 +88,53 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+
+    <script>
+        //登陆脚本
+        function Login() {
+            var userName = $("#account").val();
+            var passWord = $("#pwd").val();
+            var validatecode = $("#validateCode").val();
+
+            if (userName == "") {
+                layer.alert("账号不能为空", { icon: 0 });
+                //重新聚焦于账户框
+                $("#account").focus();
+                return;
+                if (passWord == "")
+                    layer.alert("密码不能为空", { icon: 0 });
+                $("#pwd").focus();
+                return;
+                if (validatecode == "") {
+                    layer.alert("验证码不能为空", { icon: 0 });
+                    $("#validateCode").focus();
+                    return;
+
+                }
+                layer.load();
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "/Init/Login",
+                    data: [{ name: 'userName', value: userName },
+                        { name: 'password', value: passWord },
+                        { name: 'validateCode', value: validatecode }
+                    ],
+                    async: true,
+                    success: function (data) {
+                        if (data.length > 0) {
+                            layer.alert(data, { icon: 2 });
+                            $("#username").focus();
+                        }
+                        else {
+                            window.location = "/Init/CMSDesk";
+                        }
+                    },
+                });
+            }
+        }
+    </script>
+
 </body>
 </html>
 
