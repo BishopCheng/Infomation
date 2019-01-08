@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+ 
 
 namespace Infomation.Controllers
 {
@@ -17,7 +19,16 @@ namespace Infomation.Controllers
 
         public IActionResult Init()
         {
-            return View();
+            //加载页面时生成验证码，生成后添加入缓存，然后显示到页面上
+            string webapiurl = "http://localhost:51385/LoginService/login";
+             
+            var httpResponse = new HttpResponseMessage();
+            using (var httpClient  = new HttpClient())
+            {
+                 
+
+            }
+                return View();
         }
 
         [HttpPost]
