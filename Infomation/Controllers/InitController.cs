@@ -31,6 +31,26 @@ namespace Infomation.Controllers
                 return View();
         }
 
+        public IActionResult GetVilidateCode()
+        {
+            async void Get()
+            {
+                //调用WEBAPI
+                string webApiUrl = "http://localhost:51385/LoginService/GetValidateCode";
+                //创建HttpClient
+                var handler = new HttpClientHandler() { AutomaticDecompression = System.Net.DecompressionMethods.GZip };
+                using (var http = new HttpClient(handler))
+                {
+                    //await异步等待回应
+                    var response = await http.GetAsync(webApiUrl);
+                    //确保HTTP成功状态值
+                    response.EnsureSuccessStatusCode();
+                    var File =  response.Content;
+                }
+            }
+            return File;
+        }
+
         [HttpPost]
         public ActionResult Login(IFormCollection form)
         {
