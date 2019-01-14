@@ -23,6 +23,17 @@ namespace Infomation.Controllers
         }
        
         [HttpPost]
+        public async Task<ActionResult> Login(IFormCollection form)
+        {
+            string userName = form["userName"];
+            string passWord = form["password"];
+            string validateCode = form["validateCode"];
+
+
+
+        }
+
+        [HttpPost]
         public ActionResult Login(IFormCollection form)
         {
             //获取参数
@@ -32,6 +43,7 @@ namespace Infomation.Controllers
 
             //调用服务
             
+
 
             string msg="";
 

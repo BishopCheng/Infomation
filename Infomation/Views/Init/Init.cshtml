@@ -53,8 +53,8 @@
                 <div class="row clearfix">
                     <div class="form-controls col-xs-8 col-xs-offset-3">
                         <input id="validateCode" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                        <img id="validateImg" src="images/VerifyCode.aspx.png">
-                        <a id="kanbuq" href="javascript:;">看不清，换一张</a>
+                        <img id="validateImg" src="http://192.168.1.10:8089/api/LoginService/GetValidateCode?1">
+                        @*<a id="kanbuq" href="javascript:;">看不清，换一张</a>*@
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -92,25 +92,20 @@
     <script>
         //页面加载时加载验证码
         $(function () {
-            $.ajax({
-                cache: false,
-                type: "GET",
-                dataType: "jsonp",
-                jsonp: "callback",
-                jsonpCallback:"callback",
-                url: "http://localhost:51385/LoginService/GetValidateCode",
-                async: true,
-                success: function (data) {
-                    if (data.length > 0) {
-                        $("#validateImg").attr("src", data);
-                    }
-                    else {
-                        alert("验证码加载失败！");
-                    }
-                },
-            })
+            $("#validateImg").click(function () {
+                //点击图片更换验证码
+                
+                $('#validateImg').attr('src', $('#validateImg').attr('src')+1)
 
+             });
+          
         });
+
+        //获取验证码回调函数
+        function getPath(jsonp) {
+            var imgpath = jsonp.msg;
+
+        } 
 
         //登陆脚本
         function Login() {
